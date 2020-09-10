@@ -9,9 +9,9 @@
 
 
 $connect = $conn;
-$columns = array('id', 'title', 'date', 'time', 'amount','transfer', 'bk', 'acount', 'checkdate');
+$columns = array('id', 'name', 'pkg', 'title','text', 'subtext','bigtext','infotext', 'created_at','checkdate');
 
-$query = "SELECT * FROM sms WHERE ";
+$query = "SELECT * FROM lines WHERE ";
 
 if($_POST["is_date_search"] == "yes")
 {
@@ -22,13 +22,14 @@ if(isset($_POST["search"]["value"]))
 {
  $query .= '
   (id LIKE "%'.$_POST["search"]["value"].'%" 
-  OR title LIKE "%'.$_POST["search"]["value"].'%" 
-  OR date LIKE "%'.$_POST["search"]["value"].'%" 
-  OR time LIKE "%'.$_POST["search"]["value"].'%"
-  OR amount LIKE "%'.$_POST["search"]["value"].'%"
-  OR transfer LIKE "%'.$_POST["search"]["value"].'%"
-  OR bk LIKE "%'.$_POST["search"]["value"].'%"
-  OR acount LIKE "%'.$_POST["search"]["value"].'%"
+  OR name LIKE "%'.$_POST["search"]["value"].'%" 
+  OR pkg LIKE "%'.$_POST["search"]["value"].'%" 
+  OR title LIKE "%'.$_POST["search"]["value"].'%"
+  OR text LIKE "%'.$_POST["search"]["value"].'%"
+  OR subtext LIKE "%'.$_POST["search"]["value"].'%"
+  OR bigtext LIKE "%'.$_POST["search"]["value"].'%"
+  OR infotext LIKE "%'.$_POST["search"]["value"].'%"
+  OR created_at LIKE "%'.$_POST["search"]["value"].'%"
   OR checkdate LIKE "%'.$_POST["search"]["value"].'%")
  ';
 }
@@ -60,20 +61,21 @@ while($row = mysqli_fetch_array($result))
 {
  $sub_array = array();
  $sub_array[] = $row["id"];
+ $sub_array[] = $row["name"];
+ $sub_array[] = $row["pkg"];
  $sub_array[] = $row["title"];
- $sub_array[] = $row["date"];
- $sub_array[] = $row["time"];
- $sub_array[] = $row["amount"];
- $sub_array[] = $row["transfer"];
- $sub_array[] = $row["bk"];
- $sub_array[] = $row["acount"];
+ $sub_array[] = $row["text"];
+ $sub_array[] = $row["subtext"];
+ $sub_array[] = $row["bigtext"];
+ $sub_array[] = $row["infotext"];
+ $sub_array[] = $row["created_at"];
  $sub_array[] = $row["checkdate"];
  $data[] = $sub_array;
 }
 
 function get_all_data($connect)
 {
- $query = "SELECT * FROM sms";
+ $query = "SELECT * FROM lines";
  $result = mysqli_query($connect, $query);
  return mysqli_num_rows($result);
 }

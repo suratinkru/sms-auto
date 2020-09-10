@@ -122,14 +122,15 @@ body {
 </div>
 
 
-
-
     <div class="container">
 
 
         <div class="row">
             <div class="col-md-12 py-3">
-                <h5 class="text-center">DATATABLE GATEWAY</h5>
+                <div class=" p-3" style="background-color: #bee5eb!important; font-family: fantasy;">
+                   <h5 class="text-center">DATATABLE GATEWAY</h5>
+                </div>
+              
                 <hr>
             </div>
         </div>
@@ -167,14 +168,15 @@ body {
                                 <thead class="table-info">
                                     <tr >
                                         <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Pkg</th>
                                         <th>Title</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Amount</th>
-                                        <th>Transfer</th>
-                                        <th>Bk</th>
-                                        <th>Acount</th>
+                                        <th>Text</th>
+                                        <th>Subtext</th>
+                                        <th>Bigtext</th>
+                                        <th>Infotext</th>
                                         <th>Created_at</th>
+                                        <th>Chectdate</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -267,31 +269,34 @@ function myFunction() {
                             }
                         },
                         {
+                            "data": "name"
+                        },
+                        {
+                            "data": "pkg"
+                        },
+                        {
                             "data": "title"
                         },
                         {
-                            "data": "date"
+                            "data": "text"
                         },
                         {
-                            "data": "time"
+                            "data": "subtext"
                         },
                         {
-                            "data": "amount"
+                            "data": "bigtext"
                         },
                         {
-                            "data": "transfer"
+                            "data": "infotext"
                         },
                         {
-                            "data": "bk"
-                        },
-                        {
-                            "data": "acount"
+                            "data": "created_at"
                         },
                         {
                             "data": "checkdate",
-                            "render": function(data, type, row, meta) {
-                                return moment(row.created_at).format('DD-MM-YYYY');
-                            }
+                            // "render": function(data, type, row, meta) {
+                            //     return moment(row.created_at).format('DD-MM-YYYY');
+                            // }
                         },
                         // {
                         //     "data": "standard",

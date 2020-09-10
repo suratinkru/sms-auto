@@ -5,7 +5,7 @@ class Model
     private $server = "localhost";
     private $username = "root";
     private $password = "";
-    private $db = "sms";
+    private $db = "noti";
     private $conn;
 
     public function __construct()
@@ -22,13 +22,13 @@ class Model
     {
         $data = [];
 
-        $query = "SELECT * FROM sms";
+        $query = "SELECT * FROM line";
         if ($sql = $this->conn->query($query)) {
             while ($row = mysqli_fetch_assoc($sql)) {
                 $data[] = $row;
             }
         }
-
+  
         return $data;
     }
 
@@ -37,7 +37,7 @@ class Model
         $data = [];
 
         if (isset($start_date) && isset($end_date)) {
-            $query = "SELECT * FROM `sms` WHERE `checkdate` > '$start_date' AND `checkdate` < '$end_date'";
+            $query = "SELECT * FROM `line` WHERE `checkdate` > '$start_date' AND `checkdate` < '$end_date'";
             if ($sql = $this->conn->query($query)) {
                 while ($row = mysqli_fetch_assoc($sql)) {
                     $data[] = $row;
