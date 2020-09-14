@@ -124,7 +124,7 @@ if (isset($_GET['logout'])) {
             <!-- logged in user information -->
             <?php if (isset($_SESSION['username'])) : ?>
                 <a class="float-right"> Welcome <?php echo $_SESSION['username']; ?></a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="index.php?logout='1'" class="float-right" style="color: red;"> Logout</a>
+                <a href="index.php?logout='1'" class="float-right border" style="color: red;"><i class="fas fa-sign-out-alt"></i> Logout</a>
             <?php endif ?>
 
             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
