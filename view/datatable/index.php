@@ -175,6 +175,12 @@ body {
                                         <th>Subtext</th>
                                         <th>Bigtext</th>
                                         <th>Infotext</th>
+                                        <th>date</th>
+                                        <th>time</th>
+                                        <th>amount</th>
+                                        <th>bk_tranfer</th>
+                                        <th>bk_number</th>
+                                        <th>bk_number_tranfer</th>
                                         <th>Created_at</th>
                                         <th>Chectdate</th>
                                     </tr>
@@ -186,7 +192,7 @@ body {
             </div>
         </div>
     </div>
- 
+
 
   
 
@@ -288,6 +294,24 @@ function myFunction() {
                         },
                         {
                             "data": "infotext"
+                        },
+                        {
+                            "data": "date"
+                        },
+                        {
+                            "data": "time"
+                        },
+                        {
+                            "data": "amount"
+                        },
+                        {
+                            "data": "bk_tranfer"
+                        },
+                        {
+                            "data": "bk_number"
+                        },
+                        {
+                            "data": "bk_number_tranfer"
                         },
                         {
                             "data": "created_at"

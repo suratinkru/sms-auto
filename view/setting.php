@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include_once('../config/server.php');
 
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
@@ -25,6 +26,7 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/d73d3abf8d.js" crossorigin="anonymous"></script>
 
     <style>
         body {
@@ -115,10 +117,10 @@ if (isset($_GET['logout'])) {
 
     <div class="topnav shadow " id="myTopnav">
         <div class="container">
-            <a href="#" class="active ">GATEWAY</a>
-            <a href="index.php" class="">Home</a>
-            <a href="view/datatable/index.php" class="">Datatable</a>
-            <a href="view/setting.php" class="">Settings</a>
+            <a href="../index.php" class="active ">GATEWAY</a>
+            <a href="../index.php" class="">Home</a>
+            <a href="datatable/index.php" class="">Datatable</a>
+            <a href="#" class="">Settings</a>
             <!-- logged in user information -->
             <?php if (isset($_SESSION['username'])) : ?>
                 <a class="float-right"> Welcome <?php echo $_SESSION['username']; ?></a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -146,56 +148,115 @@ if (isset($_GET['logout'])) {
         </div>
 
 
-        <h1>เพิ่ม Enpoint Webhook</h1>
-        <form action="../controller/login_db.php" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
-        </div>
-    
-        <div class="form-group ">
-            <button type="submit" name="login_user"class="btn btn-primary btn-sm">เพิ่ม</button>
-        </div>
-    
-    </form>
+   
+        <?php  
+          if(isset($_GET['id'])){
+              $id = $_GET['id'];
+            
+            $sql = "SELECT * FROM `url` WHERE `id` = $id ";
+            $resultedit = mysqli_query($conn, $sql); 
+
+        
+              ?>
+
+             <h1>แก้ไข Enpoint Webhook</h1>
+                <form action="../controller/setting.php" method="post">
+              <?php    while($rowe = mysqli_fetch_array($resultedit)) {  ?>
+                <div class="form-group">
+                    <label for="url">url</label>
+                    <input type="text" class="form-control" name="url" value="<?php echo $rowe["urlname"]; ?>">
+                </div>
+            
+                <div class="form-group ">
+                    <button type="submit" name="update" id="<?php echo $rowe["id"]; ?>" class="btn btn-primary btn-sm">update</button>
+                </div>
+
+              <?php  } ?>
+              
+            </form>
+         <?php 
+          }else{
+            ?>
+             <h1>เพิ่ม Enpoint Webhook</h1>
+                <form action="../controller/setting.php" method="post">
+
+                <div class="form-group">
+                    <label for="url">url</label>
+                    <input type="text" class="form-control" name="url">
+                </div>
+            
+                <div class="form-group ">
+                    <button type="submit" name="urlname"class="btn btn-primary btn-sm">เพิ่ม</button>
+                </div>
+            
+            </form>
+            <?php 
+          }
+            
+        ?>
+       
 
 
+         <?php
+            //2. query ข้อมูลจากตาราง tb_member: 
+            $query = "SELECT * FROM url ORDER BY id asc" or die("Error:" . mysqli_error($conn)); 
+            //3.เก็บข้อมูลที่ query ออกมาไว้ในตัวแปร result . 
+            $result = mysqli_query($conn, $query); 
+            //4 . แสดงข้อมูลที่ query ออกมา โดยใช้ตารางในการจัดข้อมูล: 
 
+            ?>
         <!-- //table -->
-
         <div class="table-responsive">
             <table class="table border">
                 <caption>List of users</caption>
-                <thead class="" style="background-color: #bee5eb!important;">
-                    <tr>
+                <thead class="" style="background-color: #bee5eb!important;">           
+                  <tr>
                         <th scope="col">#</th>
-                        <th scope="col">EnpoitName</th>
+                        <th scope="col">EnpoitURL</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                <?php 
+                while($row = mysqli_fetch_array($result)) {  ?>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row"><?php echo $row["id"]  ?></th>
+                        <td><?php echo $row["urlname"]  ?></td>
+                        <td><a href="setting.php?id=<?php echo $row["id"];?>" ><i class="far fa-edit"></i></button></td>
+                        <td><a href="JavaScript:if(confirm('Confirm Delete?')==true){window.location='../controller/setting.php?id=<?php echo $row["id"];?>';}"><i class="far fa-trash-alt"></i></a></td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+               
+                <?php } ?>
                 </tbody>
             </table>
         </div>
+
+
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Edit EnpoitURL</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">UPDATE</button>
+                </div>
+                </div>
+            </div>
+            </div>
 
     </div>
 
@@ -204,6 +265,30 @@ if (isset($_GET['logout'])) {
     <script src="../node_modules/jquery/dist/jquery.slim.min.js"></script>
     <script src="../node_modules/popper.js/dist/popper.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  
+
+
+    <script>
+        function GetUserDetails(id) {
+    // Add User ID to the hidden field for furture usage
+    $("#hidden_user_id").val(id);
+    $.post("ajax/readUserDetails.php", {
+            id: id
+        },
+        function (data, status) {
+            // PARSE json data
+            var user = JSON.parse(data);
+            // Assing existing values to the modal popup fields
+            $("#update_first_name").val(user.first_name);
+            $("#update_last_name").val(user.last_name);
+            $("#update_email").val(user.email);
+        }
+    );
+    // Open modal popup
+    $("#staticBackdrop").modal("show");
+}
+    </script>
 
 
 </body>

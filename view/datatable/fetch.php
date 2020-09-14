@@ -9,7 +9,7 @@
 
 
 $connect = $conn;
-$columns = array('id', 'name', 'pkg', 'title','text', 'subtext','bigtext','infotext', 'created_at','checkdate');
+$columns = array('id', 'name', 'pkg', 'title','text', 'subtext','bigtext','infotext','date','time', 'amount', 'bk_tranfer', 'bk_number', 'bk_number_tranfer', 'created_at','checkdate');
 
 $query = "SELECT * FROM lines WHERE ";
 
@@ -29,6 +29,12 @@ if(isset($_POST["search"]["value"]))
   OR subtext LIKE "%'.$_POST["search"]["value"].'%"
   OR bigtext LIKE "%'.$_POST["search"]["value"].'%"
   OR infotext LIKE "%'.$_POST["search"]["value"].'%"
+  OR date LIKE "%'.$_POST["search"]["value"].'%"
+  OR time LIKE "%'.$_POST["search"]["value"].'%"
+  OR amount LIKE "%'.$_POST["search"]["value"].'%"
+  OR bk_tranfer LIKE "%'.$_POST["search"]["value"].'%"
+  OR bk_number LIKE "%'.$_POST["search"]["value"].'%"
+  OR bk_number_tranfer LIKE "%'.$_POST["search"]["value"].'%"
   OR created_at LIKE "%'.$_POST["search"]["value"].'%"
   OR checkdate LIKE "%'.$_POST["search"]["value"].'%")
  ';
@@ -68,6 +74,12 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = $row["subtext"];
  $sub_array[] = $row["bigtext"];
  $sub_array[] = $row["infotext"];
+ $sub_array[] = $row["date"];
+ $sub_array[] = $row["time"];
+ $sub_array[] = $row["amount"];
+ $sub_array[] = $row["bk_tranfer"];
+ $sub_array[] = $row["bk_number"];
+ $sub_array[] = $row["bk_number_tranfer"];
  $sub_array[] = $row["created_at"];
  $sub_array[] = $row["checkdate"];
  $data[] = $sub_array;
